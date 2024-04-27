@@ -1,20 +1,21 @@
 {
     "description": {
-        "X":["Date", "Location", "MinTemp", "MaxTemp", "Rainfall", "Evaporation",
-        "Sunshine", "WindGustDir", "WindGustSpeed", "WindDir9am", "WindDir3pm",
-        "WindSpeed9am", "WindSpeed3pm", "Humidity9am", "Humidity3pm",
-        "Pressure9am", "Pressure3pm", "Cloud9am", "Cloud3pm", "Temp9am",
-        "Temp3pm", "RainToday", "RainTomorrow"],
+        "X":["Date", "Location", "MinTemp", 
+            "MaxTemp", "Rainfall", "Evaporation",
+            "Sunshine", "WindGustDir", "WindGustSpeed", 
+            "WindDir9am", "WindDir3pm","WindSpeed9am", 
+            "WindSpeed3pm", "Humidity9am", "Humidity3pm",
+            "Pressure9am", "Pressure3pm", "Cloud9am", 
+            "Cloud3pm", "Temp9am","Temp3pm", 
+            "RainToday", "RainTomorrow"],
 
         "final_columns": ["Location", "Rainfall", "MinTemp", 
-        "MaxTemp", "Evaporation", 
-        "Sunshine", "WindGustDir",
-        "WindGustSpeed", "WindDir9am", 
-        "WindDir3pm", "WindSpeed9am",
-        "WindSpeed3pm", "Humidity3pm",
-        "Pressure9am", "Pressure3pm", 
-        "Cloud9am", "Cloud3pm",
-        "RainToday", "RainTomorrow"],
+                            "MaxTemp", "Evaporation", "Sunshine", 
+                            "WindGustDir","WindGustSpeed", "WindDir9am", 
+                            "WindDir3pm", "WindSpeed9am","WindSpeed3pm", 
+                            "Humidity3pm","Pressure9am", "Pressure3pm", 
+                            "Cloud9am", "Cloud3pm","RainToday", 
+                            "RainTomorrow"],
 
         "y": "RainTomorrow",
         "metrics": "accuracy_score"
@@ -31,23 +32,31 @@
             "operation_number": 2,
             "operation_name": "fill_nans",
             "params": {
-                "in_columns": ["WindGustDir", "WindDir9am", "WindDir3pm"],
-                "methods": ["mode"]
+                "in_columns": ["Location", "WindGustDir", "WindDir9am", "WindDir3pm"],
+                "methods": ["mode", "mode", "mode", "mode"]
             }
         },
         {
             "operation_number": 3,
             "operation_name": "fill_nans",
             "params": {
-                "in_columns": ["Rainfall", "Evaporation", "Sunshine", "WindGustSpeed", "WindSpeed9am", "WindSpeed3pm", "Humidity9am", "Humidity3pm", "Cloud9am", "Cloud3pm", "Temp9am", "Temp3pm"],
-                "methods": ["mean"]
+                "in_columns": ["MinTemp", "MaxTemp", "Rainfall", 
+                                "Evaporation", "Sunshine", "WindGustSpeed", 
+                                "WindSpeed9am", "WindSpeed3pm", "Humidity3pm", 
+                                "Pressure9am", "Pressure3pm", "Cloud9am", 
+                                "Cloud3pm"],
+                "methods": ["mean", "mean", "mean", 
+                            "mean", "mean", "mean", 
+                            "mean", "mean", "mean", 
+                            "mean", "mean", "mean", 
+                            "mean"]
             }
         },
         {
             "operation_number": 4,
             "operation_name": "replace",
             "params": {
-                "in_columns":["Location", "WindGustDir", "WindDir9am", "WindDir3pm", "RainToday", "RainTomorrow"],
+                "in_columns":["RainToday", "RainTomorrow"],
                 "old_values": ["Yes", "No"],
                 "new_values": [1, 0],
                 "inplaces":["True", "True"]
@@ -57,17 +66,38 @@
             "operation_number": 5,
             "operation_name": "handle_outliers",
             "params": {
-                "in_columns": ["Rainfall", "Evaporation", "Sunshine", "WindGustSpeed", "WindSpeed9am", "WindSpeed3pm", "Humidity9am", "Humidity3pm", "Cloud9am", "Cloud3pm", "Temp9am", "Temp3pm"],
-                "modes": ["std"],
-                "methods": ["cap"],
-                "factors": 3
+                "in_columns": ["Location", "Rainfall", "MinTemp", 
+                                "MaxTemp", "Evaporation", "Sunshine", 
+                                "WindGustDir","WindGustSpeed", "WindDir9am", 
+                                "WindDir3pm", "WindSpeed9am","WindSpeed3pm", 
+                                "Humidity3pm","Pressure9am", "Pressure3pm", 
+                                "Cloud9am", "Cloud3pm"],
+
+                "modes": ["std", "std", "std",
+                            "std", "std", "std",
+                            "std", "std", "std",
+                            "std", "std", "std",
+                            "std", "std", "std",
+                            "std", "std"],
+                "methods": ["cap", "cap", "cap",
+                            "cap", "cap", "cap",
+                            "cap", "cap", "cap",
+                            "cap", "cap", "cap",
+                            "cap", "cap", "cap",
+                            "cap", "cap"],
+                "factors": [3, 3, 3,
+                            3, 3, 3,
+                            3, 3, 3,
+                            3, 3, 3,
+                            3, 3, 3,
+                            3, 3]
             }
         },
         {
             "operation_number": 6,
             "operation_name": "encode_labels",
             "params": {
-                "in_columns": ["Location", "WindGustDir", "WindDir9am", "WindDir3pm", "RainToday", "RainTomorrow"]
+                "in_columns": ["Location", "WindGustDir", "WindDir9am", "WindDir3pm"]
             }
         }
     ]
