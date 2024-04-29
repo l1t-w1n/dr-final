@@ -22,19 +22,17 @@ class DataLoader(object):
         numerical_features = []
         
         for col in self.dataset.columns:
-            if self.dataset[col].dtype == 'object':
+            if self.dataset[col].dtype == 'object' and col != 'RainTomorrow':
                 categorical_features.append(col)
-            else:
+            elif self.dataset[col].dtype != 'object' and col != 'RainTomorrow':
                 numerical_features.append(col)
-        #print(f"Categorical Features: {categorical_features}")
-        #print(f"Numerical Features: {numerical_features}")
+        
         for col in categorical_features:
             self.dataset[col] = self.dataset[col].fillna(self.dataset[col].mode()[0])
             
         for col in numerical_features:
             self.dataset[col] = self.dataset[col].fillna(self.dataset[col].mean())
-                
-        self.dataset['RainTomorrow'] = self.dataset['RainTomorrow'].map({'Yes': 1, 'No': 0})    
+  
         self.dataset['RainToday'] = self.dataset['RainToday'].map({'Yes': 1, 'No': 0})
         
         le = preprocessing.LabelEncoder()
@@ -42,14 +40,21 @@ class DataLoader(object):
         self.dataset['WindGustDir'] = le.fit_transform(self.dataset['WindGustDir'])
         self.dataset['WindDir3pm'] = le.fit_transform(self.dataset['WindDir3pm'])
         self.dataset['Location'] = le.fit_transform(self.dataset['Location'])
+ 
+        self.dataset=self.dataset[(np.abs(stats.zscore(self.dataset[numerical_features])) < 100).all(axis=1)]
 
-        self.dataset=self.dataset[(np.abs(stats.zscore(self.dataset)) < 3).all(axis=1)]
-        
         return self.dataset
 
 if __name__ == '__main__':
-    df = pd.read_csv('./data/weatherAUS.csv')
+    df_train = pd.read_csv('./data/train.csv')
     data_loader = DataLoader()
-    data_loader.fit(df)
+    data_loader.fit(df_train)
     data = data_loader.load_data()
     print(data.head())
+    
+    df_test = pd.read_csv('./data/val.csv')
+    data_loader = DataLoader()
+    data_loader.fit(df_test)
+    data_test = data_loader.load_data()
+    
+    print(data.columns==data_test.columns)
