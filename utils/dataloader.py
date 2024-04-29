@@ -20,11 +20,11 @@ class DataLoader(object):
         
         categorical_features = []
         numerical_features = []
-        
+        today_tomorrow = ['RainToday', 'RainTomorrow']
         for col in self.dataset.columns:
-            if self.dataset[col].dtype == 'object' and col != 'RainTomorrow':
+            if self.dataset[col].dtype == 'object' and col not in today_tomorrow:
                 categorical_features.append(col)
-            elif self.dataset[col].dtype != 'object' and col != 'RainTomorrow':
+            elif self.dataset[col].dtype != 'object' and col not in today_tomorrow:
                 numerical_features.append(col)
         
         for col in categorical_features:
@@ -33,7 +33,7 @@ class DataLoader(object):
         for col in numerical_features:
             self.dataset[col] = self.dataset[col].fillna(self.dataset[col].mean())
   
-        self.dataset['RainToday'] = self.dataset['RainToday'].map({'Yes': 1, 'No': 0})
+        #self.dataset['RainToday'] = self.dataset['RainToday'].map({'Yes': 1, 'No': 0})
         
         le = preprocessing.LabelEncoder()
         self.dataset['WindDir9am'] = le.fit_transform(self.dataset['WindDir9am'])

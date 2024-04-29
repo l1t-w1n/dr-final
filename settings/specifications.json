@@ -14,8 +14,8 @@
                             "WindGustDir","WindGustSpeed", "WindDir9am", 
                             "WindDir3pm", "WindSpeed9am","WindSpeed3pm", 
                             "Humidity3pm","Pressure9am", "Pressure3pm", 
-                            "Cloud9am", "Cloud3pm","RainToday", 
-                            "RainTomorrow"],
+                            "Cloud9am", "Cloud3pm","RainToday"
+                            ],
 
         "y": "RainTomorrow",
         "metrics": "accuracy_score"
@@ -54,16 +54,6 @@
         },
         {
             "operation_number": 4,
-            "operation_name": "replace",
-            "params": {
-                "in_columns":["RainToday", "RainTomorrow"],
-                "old_values": ["Yes", "No"],
-                "new_values": [1, 0],
-                "inplaces":["True", "True"]
-            }
-        },
-        {
-            "operation_number": 5,
             "operation_name": "handle_outliers",
             "params": {
                 "in_columns": ["Location", "Rainfall", "MinTemp", 
@@ -94,7 +84,7 @@
             }
         },
         {
-            "operation_number": 6,
+            "operation_number": 5,
             "operation_name": "encode_labels",
             "params": {
                 "in_columns": ["Location", "WindGustDir", "WindDir9am", "WindDir3pm"]
