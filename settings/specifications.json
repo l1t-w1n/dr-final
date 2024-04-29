@@ -9,13 +9,13 @@
             "Cloud3pm", "Temp9am","Temp3pm", 
             "RainToday"],
 
-        "final_columns": ["Location", "Rainfall", "MinTemp", 
-                            "MaxTemp", "Evaporation", "Sunshine", 
-                            "WindGustDir","WindGustSpeed", "WindDir9am", 
-                            "WindDir3pm", "WindSpeed9am","WindSpeed3pm", 
-                            "Humidity3pm","Pressure9am", "Pressure3pm", 
-                            "Cloud9am", "Cloud3pm","RainToday"
-                            ],
+        "final_columns": ["Location", "MinTemp", 
+                            "MaxTemp", "Rainfall", "Evaporation",
+                            "Sunshine", "WindGustDir", "WindGustSpeed", 
+                            "WindDir9am", "WindDir3pm","WindSpeed9am", 
+                            "WindSpeed3pm", "Humidity3pm", "Pressure9am", 
+                            "Pressure3pm", "Cloud9am", "Cloud3pm", 
+                            "RainToday"],
 
         "y": "RainTomorrow",
         "metrics": "accuracy_score"
