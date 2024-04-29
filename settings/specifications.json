@@ -7,7 +7,7 @@
             "WindSpeed3pm", "Humidity9am", "Humidity3pm",
             "Pressure9am", "Pressure3pm", "Cloud9am", 
             "Cloud3pm", "Temp9am","Temp3pm", 
-            "RainToday", "RainTomorrow"],
+            "RainToday"],
 
         "final_columns": ["Location", "Rainfall", "MinTemp", 
                             "MaxTemp", "Evaporation", "Sunshine", 
