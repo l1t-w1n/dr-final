@@ -1,6 +1,8 @@
-xgboost
-flask
-pandas
-scikit-learn
-numpy
-scipy
+Flask==3.0.3
+imblearn==0.0
+numpy==1.21.5
+pandas==2.2.2
+Requests==2.31.0
+scikit_learn==1.4.2
+scipy==1.13.0
+xgboost==2.0.3

@@ -1,6 +1,6 @@
 from utils import Predictor
 from utils import DataLoader
-
+from pandas import DataFrame
 from flask import Flask, request, jsonify, make_response
 
 import pandas as pd
@@ -27,7 +27,9 @@ def predict():
             processed_df = loader.load_data()
             print('processed: ', processed_df.columns)
             predictor = Predictor()
-            response_dict = {'prediction': predictor.predict(processed_df).tolist()}
+            processed_df = DataFrame(processed_df)
+            prediction = predictor.predict(processed_df)
+            response_dict = {'prediction': prediction.tolist()}
 
             return make_response(jsonify(response_dict), 200)
     except Exception as e:
